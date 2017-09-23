@@ -1,6 +1,7 @@
 package cat.uab.crossword.model;
 
 import cat.uab.crossword.exception.CrosswordFileException;
+import jdk.nashorn.internal.runtime.ListAdapter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,9 +13,14 @@ public class Crossword {
     //Singleton instance
     private static Crossword instance = null;
 
-    private char matrix[][];
+    //Const
+    private final static char BLACK = '#';
+
     private ArrayList<String> lines;
     private File file;
+
+    private char matrix[][];
+    private ArrayList<Word> words;
 
     /**
      * Getter instance crossword
@@ -35,6 +41,7 @@ public class Crossword {
             instance = new Crossword();
 
         instance.lines = new ArrayList<>();
+        instance.words = new ArrayList<>();
         instance.file = file;
 
         try {
@@ -43,8 +50,38 @@ public class Crossword {
             e.printStackTrace();
         }
         instance.loadMatrix();
+        instance.loadWords();
 
         return instance;
+    }
+
+    /**
+     * Load all words in list words
+     */
+    private void loadWords(){
+
+        int i, j;
+        int rowCount;
+        int colCount;
+
+        rowCount = this.getRowHeight();
+        colCount = this.getColWidth();
+
+        for(i = 0; i < rowCount; i++){
+
+            for(j = 0; j < colCount; j++){
+
+                if(this.matrix[i][j] >= '1' && this.matrix[i][j] <= '9'){
+
+                    if((j-1 == -1 || this.matrix[i][j-1] == BLACK) && this.matrix[i][j+1] != BLACK)
+                        this.words.add(new Word(this.matrix[i][j], Word.HORIZONTAL));
+
+                    if((i-1 == -1 || this.matrix[i-1][j] == BLACK) && this.matrix[i+1][j] != BLACK)
+                        this.words.add(new Word(this.matrix[i][j], Word.VERTICAL));
+                }
+            }
+
+        }
     }
 
     /**
