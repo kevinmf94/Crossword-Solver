@@ -16,32 +16,21 @@ public class Main {
 
     public static void main (String [ ] args) {
 
-        long timeStart;
-        long timeEnd;
-
         //Load Dictionary
-        timeStart = System.currentTimeMillis();
-        File file = new File(FILES_DIR+DICTIONARY_FILE);
-        Dictionary dic = Dictionary.loadDictionary(file);
-
-        timeEnd = System.currentTimeMillis();
-        System.out.println("TIME Load dictionary: "+(timeEnd-timeStart));
+        File dicFile = new File(FILES_DIR+DICTIONARY_FILE);
+        Dictionary dic = Dictionary.loadDictionary(dicFile);
 
         //Load Crossword
-        timeStart = System.currentTimeMillis();
-        File file2 = new File(FILES_DIR+CROSSWORD_FILE);
-        Crossword cross = Crossword.loadCrossword(file2);
+        File crossFile = new File(FILES_DIR+CROSSWORD_FILE);
+        Crossword cross = Crossword.loadCrossword(crossFile);
 
-        timeEnd = System.currentTimeMillis();
-        System.out.println("TIME Load Crossword: "+(timeEnd-timeStart));
+        //Ejemplo de filtro por letra y posicion
+        int posicion = 1;
+        int lengthWord = 10;
+        char charToFilter = 'N';
 
-        //Ejemplo de filtro por letra y posicion + PRUEBA DE TIME
-        timeStart = System.currentTimeMillis();
-
-        List<String> beerDrinkers = dic.get(10).stream().filter(line -> line.toCharArray()[1] == 'N').collect(Collectors.toList());
+        List<String> beerDrinkers = dic.get(lengthWord).stream().filter(line -> line.toCharArray()[posicion] == charToFilter).collect(Collectors.toList());
         TreeSet<String> aa = new TreeSet<>(beerDrinkers);
 
-        timeEnd = System.currentTimeMillis();
-        System.out.println("TIME Apply Dictionary Filter : "+(timeEnd-timeStart));
     }
 }
