@@ -1,7 +1,6 @@
 package cat.uab.crossword.model;
 
 import cat.uab.crossword.exception.CrosswordFileException;
-import cat.uab.crossword.exception.DictionaryFileException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,16 +9,26 @@ import java.util.ArrayList;
 
 public class Crossword {
 
+    //Singleton instance
     private static Crossword instance = null;
 
     private char matrix[][];
     private ArrayList<String> lines;
     private File file;
 
+    /**
+     * Getter instance crossword
+     * @return Crossword
+     */
     public static Crossword getCrossword(){
         return instance;
     }
 
+    /**
+     * Load and fill matrix of crossword from file
+     * @param file
+     * @return Instance of crossword
+     */
     public static Crossword loadCrossword(File file){
 
         if(instance == null)
@@ -38,6 +47,9 @@ public class Crossword {
         return instance;
     }
 
+    /**
+     * Fill matrix with file data
+     */
     private void loadMatrix(){
 
         int i, j;
@@ -60,17 +72,25 @@ public class Crossword {
         }
     }
 
+    /**
+     * Return the number of columns
+     * @return int
+     */
     public int getColWidth(){
         return this.lines.get(0).split("\t").length;
     }
 
+    /**
+     * Return the number of rows
+     * @return int
+     */
     public int getRowHeight(){
         return this.lines.size();
     }
 
     /**
      * Load file data on crossword structure.
-     * @throws DictionaryFileException
+     * @throws CrosswordFileException
      */
     private void loadFile() throws CrosswordFileException {
 
