@@ -28,9 +28,7 @@ public class Main {
         int posicion = 1;
         int lengthWord = 10;
         char charToFilter = 'N';
-
         List<String> beerDrinkers = dic.get(lengthWord).stream().filter(line -> line.toCharArray()[posicion] == charToFilter).collect(Collectors.toList());
         TreeSet<String> aa = new TreeSet<>(beerDrinkers);
-
     }
 }

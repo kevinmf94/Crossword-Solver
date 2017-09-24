@@ -9,18 +9,42 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class Crossword {
+    /*
+    * An aux class for catch the restrictions
+     */
+    private class PairWordPos{
+        public Word word;
+        public int pos;
 
+        public PairWordPos(Word word, int pos) {
+            this.word = word;
+            this.pos = pos;
+        }
+    }
     //Singleton instance
     private static Crossword instance = null;
 
     //Const
-    private final static char BLACK = '#';
+    private final static short BLACK = -1;
 
     private ArrayList<String> lines;
     private File file;
-
-    private char matrix[][];
+    private short matrix[][];
     private ArrayList<Word> words;
+
+
+
+    public static short getBLACK() {
+        return BLACK;
+    }
+
+    public short[][] getMatrix() {
+        return matrix;
+    }
+
+    public ArrayList<Word> getWords() {
+        return words;
+    }
 
     /**
      * Getter instance crossword
@@ -58,7 +82,7 @@ public class Crossword {
     /**
      * Load all words in list words
      */
-    private void loadWords(){
+/*    private void loadWords(){
 
         int i, j;
         int rowCount;
@@ -82,8 +106,65 @@ public class Crossword {
             }
 
         }
-    }
+    }*/
 
+    private void loadWords(){
+
+        int i, j;
+        int rowCount;
+        int colCount;
+
+        rowCount = this.getRowHeight();
+        colCount = this.getColWidth();
+        PairWordPos auxRestrictionsMatrix[][] = new PairWordPos[rowCount][colCount];
+        for (i = 0; i<rowCount;i++){
+            for(j=0;j<colCount;j++)
+                auxRestrictionsMatrix[i][j] = new PairWordPos(null, -1);
+        }
+        for(i = 0; i < rowCount; i++){
+
+            for(j = 0; j < colCount; j++){
+                if(this.matrix[i][j] >0){
+                //if(this.matrix[i][j] >= '1' && this.matrix[i][j] <= '9'){
+
+                    if((j-1 == -1 || this.matrix[i][j-1] == BLACK) && ((j+1<colCount) && this.matrix[i][j+1] != BLACK)) {
+                        Word wordToAdd = new Word(matrix[i][j], Word.HORIZONTAL);
+                        int x = j+1;
+                        int pos = 1;
+                        while(x<colCount && matrix[i][x] != BLACK){
+                            if(auxRestrictionsMatrix[i][x].word == null){
+                                auxRestrictionsMatrix[i][x].word = wordToAdd;
+                                auxRestrictionsMatrix[i][x].pos = pos;
+                            } else {
+                                wordToAdd.AddRestriction(new Restriction(pos, auxRestrictionsMatrix[i][x].word, auxRestrictionsMatrix[i][x].pos));
+                                auxRestrictionsMatrix[i][x].word.AddRestriction(new Restriction(auxRestrictionsMatrix[i][x].pos, wordToAdd, pos));
+                            }
+                            pos++;
+                            x++;
+                        }
+                        this.words.add(wordToAdd);
+                    }
+                    if((i-1 == -1 || this.matrix[i-1][j] == BLACK) && ((i+1<rowCount) && this.matrix[i+1][j] != BLACK)) {
+                        Word wordToAdd = new Word(matrix[i][j], Word.VERTICAL);
+                        int y = i + 1;
+                        int pos = 1;
+                        while (y < rowCount && matrix[y][j] != BLACK) {
+                            if (auxRestrictionsMatrix[y][j].word == null) {
+                                auxRestrictionsMatrix[y][j].word = wordToAdd;
+                                auxRestrictionsMatrix[y][j].pos = pos;
+                            } else {
+                                wordToAdd.AddRestriction(new Restriction(pos, auxRestrictionsMatrix[y][j].word, auxRestrictionsMatrix[y][j].pos));
+                                auxRestrictionsMatrix[i][y].word.AddRestriction(new Restriction(auxRestrictionsMatrix[y][j].pos, wordToAdd, pos));
+                            }
+                            pos++;
+                            y++;
+                        }
+                        this.words.add(wordToAdd);
+                    }
+                }
+            }
+        }
+    }
     /**
      * Fill matrix with file data
      */
@@ -97,15 +178,15 @@ public class Crossword {
         rowCount = this.getRowHeight();
         colCount = this.getColWidth();
 
-        this.matrix = new char[rowCount][colCount];
+        this.matrix = new short[rowCount][colCount];
 
         for(i = 0; i < rowCount; i++){
 
             line = this.lines.get(i).split("\t");
 
-            for(j = 0; j < colCount; j++){
-               this.matrix[i][j] = line[j].toCharArray()[0];
-            }
+            for(j = 0; j < colCount; j++)
+                //In this mode, we can save id's greaters than 9
+                   this.matrix[i][j] = line[j].toCharArray()[0] == '#'? -1 : Short.parseShort(line[j]);
         }
     }
 
