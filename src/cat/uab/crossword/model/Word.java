@@ -12,7 +12,7 @@ public class Word {
     private TreeSet<Restriction> restrictions = new TreeSet<Restriction>();
     private int id;
     private int orientation;
-
+    private int length;
     /**
      * Constructor
      */
@@ -25,6 +25,14 @@ public class Word {
      */
     public void AddRestriction(Restriction restToAdd){
         restrictions.add(restToAdd);
+    }
+
+    public boolean WordIsValid(String word){
+        for(Restriction rest : restrictions){
+            if (!rest.CheckRestriction(word))
+                return false;
+        }
+        return true;
     }
     /*
     *Getter
@@ -39,10 +47,18 @@ public class Word {
      */
     public void setWordAssigned(String wordAssigned) { this.wordAssigned = wordAssigned; }
 
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
     /*
-        *Getter
-        * @return the id assigned to this word
-         */
+                *Getter
+                * @return the id assigned to this word
+                 */
     public int getId() {
         return id;
     }

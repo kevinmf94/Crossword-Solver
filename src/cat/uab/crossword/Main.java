@@ -2,7 +2,7 @@ package cat.uab.crossword;
 
 import cat.uab.crossword.model.Crossword;
 import cat.uab.crossword.model.Dictionary;
-
+import cat.uab.crossword.model.Solver;
 import java.io.File;
 import java.util.List;
 import java.util.TreeSet;
@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static final String FILES_DIR = "files/";
-    public static final String CROSSWORD_FILE = "crossword_A.txt";
-    public static final String DICTIONARY_FILE = "diccionari_A.txt";
+    public static final String CROSSWORD_FILE = "crossword_CB.txt";
+    public static final String DICTIONARY_FILE = "diccionari_CB.txt";
 
     public static void main (String [ ] args) {
 
@@ -30,5 +30,7 @@ public class Main {
         char charToFilter = 'N';
         List<String> beerDrinkers = dic.get(lengthWord).stream().filter(line -> line.toCharArray()[posicion] == charToFilter).collect(Collectors.toList());
         TreeSet<String> aa = new TreeSet<>(beerDrinkers);
+        Solver s = new Solver(cross, dic);
+        s.f();
     }
 }

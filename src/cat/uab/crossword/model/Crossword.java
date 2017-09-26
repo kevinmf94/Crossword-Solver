@@ -129,8 +129,8 @@ public class Crossword {
 
                     if((j-1 == -1 || this.matrix[i][j-1] == BLACK) && ((j+1<colCount) && this.matrix[i][j+1] != BLACK)) {
                         Word wordToAdd = new Word(matrix[i][j], Word.HORIZONTAL);
-                        int x = j+1;
-                        int pos = 1;
+                        int x = j;
+                        int pos = 0;
                         while(x<colCount && matrix[i][x] != BLACK){
                             if(auxRestrictionsMatrix[i][x].word == null){
                                 auxRestrictionsMatrix[i][x].word = wordToAdd;
@@ -142,23 +142,25 @@ public class Crossword {
                             pos++;
                             x++;
                         }
+                        wordToAdd.setLength(pos);
                         this.words.add(wordToAdd);
                     }
                     if((i-1 == -1 || this.matrix[i-1][j] == BLACK) && ((i+1<rowCount) && this.matrix[i+1][j] != BLACK)) {
                         Word wordToAdd = new Word(matrix[i][j], Word.VERTICAL);
-                        int y = i + 1;
-                        int pos = 1;
+                        int y = i;
+                        int pos = 0;
                         while (y < rowCount && matrix[y][j] != BLACK) {
                             if (auxRestrictionsMatrix[y][j].word == null) {
                                 auxRestrictionsMatrix[y][j].word = wordToAdd;
                                 auxRestrictionsMatrix[y][j].pos = pos;
                             } else {
                                 wordToAdd.AddRestriction(new Restriction(pos, auxRestrictionsMatrix[y][j].word, auxRestrictionsMatrix[y][j].pos));
-                                auxRestrictionsMatrix[i][y].word.AddRestriction(new Restriction(auxRestrictionsMatrix[y][j].pos, wordToAdd, pos));
+                                auxRestrictionsMatrix[y][j].word.AddRestriction(new Restriction(auxRestrictionsMatrix[y][j].pos, wordToAdd, pos));
                             }
                             pos++;
                             y++;
                         }
+                        wordToAdd.setLength(pos);
                         this.words.add(wordToAdd);
                     }
                 }

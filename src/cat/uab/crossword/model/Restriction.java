@@ -22,8 +22,8 @@ public class Restriction implements Comparable<Restriction>{
      * @param myWord: the current word
      * @return true if the word cheks the restriction
      */
-    public boolean CheckRestriction(Word myWord){
-        return myWord.getWordAssigned().toCharArray()[posOfMyWord] == otherWord.getWordAssigned().toCharArray()[posOfOtherWord];
+    public boolean CheckRestriction(String myWord){
+        return (otherWord.getWordAssigned() == "") || (myWord.toCharArray()[posOfMyWord] == otherWord.getWordAssigned().toCharArray()[posOfOtherWord]);
     }
 
     @Override
