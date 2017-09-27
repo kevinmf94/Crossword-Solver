@@ -30,7 +30,7 @@ public class Main {
         char charToFilter = 'N';
         List<String> beerDrinkers = dic.get(lengthWord).stream().filter(line -> line.toCharArray()[posicion] == charToFilter).collect(Collectors.toList());
         TreeSet<String> aa = new TreeSet<>(beerDrinkers);
-        Solver s = new Solver(cross, dic);
+        Solver s = new Solver(dic);
         s.f();
     }
 }

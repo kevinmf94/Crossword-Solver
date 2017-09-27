@@ -34,10 +34,15 @@ public class Word {
         }
         return true;
     }
+
+    public TreeSet<Restriction> getRestrictions() {
+        return restrictions;
+    }
+
     /*
-    *Getter
-    * @return the word assigned to this word
-     */
+        *Getter
+        * @return the word assigned to this word
+         */
     public String getWordAssigned() {
         return wordAssigned;
     }
