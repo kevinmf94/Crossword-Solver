@@ -1,7 +1,7 @@
 package cat.uab.crossword.model;
 
-import java.sql.Types;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class Word {
@@ -13,6 +13,7 @@ public class Word {
     private int id;
     private int orientation;
     private int length;
+
     /**
      * Constructor
      */
@@ -29,7 +30,7 @@ public class Word {
 
     public boolean WordIsValid(String word){
         for(Restriction rest : restrictions){
-            if (!rest.CheckRestriction(word))
+            if (!rest.checkRestriction(word))
                 return false;
         }
         return true;
@@ -46,6 +47,7 @@ public class Word {
     public String getWordAssigned() {
         return wordAssigned;
     }
+
     /**
     * Setter
     * @param: String of word to assign
@@ -61,17 +63,17 @@ public class Word {
     }
 
     /*
-                *Getter
-                * @return the id assigned to this word
-                 */
+    *Getter
+    * @return the id assigned to this word
+    */
     public int getId() {
         return id;
     }
 
     /*
-        *Getter
-        * @return the orientation of this word
-         */
+    *Getter
+    * @return the orientation of this word
+    */
     public int getOrientation() {
         return orientation;
     }

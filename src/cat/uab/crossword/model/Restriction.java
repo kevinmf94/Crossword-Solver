@@ -1,6 +1,7 @@
 package cat.uab.crossword.model;
 
 public class Restriction implements Comparable<Restriction>{
+
     private int posOfMyWord;
     private Word otherWord;
     private int posOfOtherWord;
@@ -22,7 +23,7 @@ public class Restriction implements Comparable<Restriction>{
      * @param myWord: the current word
      * @return true if the word cheks the restriction
      */
-    public boolean CheckRestriction(String myWord){
+    public boolean checkRestriction(String myWord){
         return (otherWord.getWordAssigned() == "") || (myWord.toCharArray()[posOfMyWord] == otherWord.getWordAssigned().toCharArray()[posOfOtherWord]);
     }
 
