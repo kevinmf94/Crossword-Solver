@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static final String FILES_DIR = "files/";
-    public static final String CROSSWORD_FILE = "crossword_CB.txt";
-    public static final String DICTIONARY_FILE = "diccionari_CB.txt";
+    public static final String CROSSWORD_FILE = "crossword_A.txt";
+    public static final String DICTIONARY_FILE = "diccionari_A.txt";
 
     public static void main (String [ ] args) {
 
@@ -28,9 +28,12 @@ public class Main {
         int posicion = 1;
         int lengthWord = 10;
         char charToFilter = 'N';
-        List<String> beerDrinkers = dic.get(lengthWord).stream().filter(line -> line.toCharArray()[posicion] == charToFilter).collect(Collectors.toList());
-        TreeSet<String> aa = new TreeSet<>(beerDrinkers);
+        //List<String> beerDrinkers = dic.get(lengthWord).stream().filter(line -> line.toCharArray()[posicion] == charToFilter).collect(Collectors.toList());
+        //TreeSet<String> aa = new TreeSet<>(beerDrinkers);
         Solver s = new Solver(dic);
         s.resolve();
+        List<String> beerDrinkers = dic.get(cross.getWords().get(0).getLength()).stream().filter(line -> cross.getWords().get(0).WordIsValid(line)/*line.toCharArray()[posicion] == charToFilter*/).collect(Collectors.toList());
+        TreeSet<String> aa = new TreeSet<>(beerDrinkers);
+        System.out.println(aa);
     }
 }

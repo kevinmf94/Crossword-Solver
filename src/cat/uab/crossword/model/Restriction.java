@@ -27,6 +27,18 @@ public class Restriction implements Comparable<Restriction>{
         return (otherWord.getWordAssigned() == "") || (myWord.toCharArray()[posOfMyWord] == otherWord.getWordAssigned().toCharArray()[posOfOtherWord]);
     }
 
+    public int getPosOfMyWord() {
+        return posOfMyWord;
+    }
+
+    public Word getOtherWord() {
+        return otherWord;
+    }
+
+    public int getPosOfOtherWord() {
+        return posOfOtherWord;
+    }
+
     @Override
     public int compareTo(Restriction o) {
         if ((this.posOfOtherWord == o.posOfOtherWord) && (this.otherWord.getId() == o.otherWord.getId())

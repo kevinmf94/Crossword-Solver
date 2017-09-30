@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Dictionary;
 
 public class Crossword {
     /*
@@ -31,7 +32,7 @@ public class Crossword {
     private File file;
     private short matrix[][];
     private ArrayList<Word> words;
-
+    private Dictionary consistencyDic;
 
 
     public static short getBLACK() {
@@ -107,7 +108,6 @@ public class Crossword {
 
         }
     }*/
-
     private void loadWords(){
 
         int i, j;

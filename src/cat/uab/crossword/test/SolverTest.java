@@ -9,8 +9,8 @@ import java.io.File;
 class SolverTest {
 
     public static final String FILES_DIR = "files/";
-    public static final String CROSSWORD_FILE = "crossword_CB.txt";
-    public static final String DICTIONARY_FILE = "diccionari_CB.txt";
+    public static final String CROSSWORD_FILE = "crossword_A.txt";
+    public static final String DICTIONARY_FILE = "diccionari_A.txt";
 
     private Dictionary dic;
     private Solver s;

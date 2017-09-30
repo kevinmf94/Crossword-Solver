@@ -6,8 +6,8 @@ import java.util.TreeSet;
 
 public class Word {
 
-    public static final int HORIZONTAL = 0;
-    public static final int VERTICAL = 1;
+    public static final int HORIZONTAL = 200;
+    public static final int VERTICAL = 100;
     private String wordAssigned = "";
     private TreeSet<Restriction> restrictions = new TreeSet<Restriction>();
     private int id;
@@ -35,7 +35,9 @@ public class Word {
         }
         return true;
     }
-
+    public int getIDInDic(){
+        return orientation+id;
+    }
     public TreeSet<Restriction> getRestrictions() {
         return restrictions;
     }
