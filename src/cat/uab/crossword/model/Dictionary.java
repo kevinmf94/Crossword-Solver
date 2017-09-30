@@ -6,9 +6,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.TreeSet;
 
-public class Dictionary extends HashMap<Integer, TreeSet<String>> {
+public class Dictionary extends HashMap<Integer, LinkedList<String>> {
 
     //Singleton instance
     private static Dictionary instance = null;
@@ -74,7 +75,7 @@ public class Dictionary extends HashMap<Integer, TreeSet<String>> {
 
             while ((line = reader.readLine()) != null) {
                 if(this.get(line.length()) == null)
-                    this.put(line.length(), new TreeSet<>());
+                    this.put(line.length(), new LinkedList<>());
 
                 this.get(line.length()).add(line);
             }

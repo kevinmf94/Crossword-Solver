@@ -25,15 +25,13 @@ public class Main {
         Crossword cross = Crossword.loadCrossword(crossFile);
 
         //Ejemplo de filtro por letra y posicion
-        int posicion = 1;
+        /*int posicion = 1;
         int lengthWord = 10;
-        char charToFilter = 'N';
-        //List<String> beerDrinkers = dic.get(lengthWord).stream().filter(line -> line.toCharArray()[posicion] == charToFilter).collect(Collectors.toList());
-        //TreeSet<String> aa = new TreeSet<>(beerDrinkers);
-        Solver s = new Solver(dic);
+        char charToFilter = 'N';*/
+        Solver s = new Solver();
         s.resolve();
-        List<String> beerDrinkers = dic.get(cross.getWords().get(0).getLength()).stream().filter(line -> cross.getWords().get(0).WordIsValid(line)/*line.toCharArray()[posicion] == charToFilter*/).collect(Collectors.toList());
-        TreeSet<String> aa = new TreeSet<>(beerDrinkers);
-        System.out.println(aa);
+        //List<String> beerDrinkers = dic.get(cross.getWords().get(0).getLength()).stream().filter(line -> cross.getWords().get(0).WordIsValid(line)/*line.toCharArray()[posicion] == charToFilter*/).collect(Collectors.toList());
+        //TreeSet<String> aa = new TreeSet<>(beerDrinkers);
+        //System.out.println(aa);
     }
 }

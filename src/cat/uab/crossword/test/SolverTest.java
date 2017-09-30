@@ -34,7 +34,7 @@ class SolverTest {
 
     @org.junit.jupiter.api.Test
     void resolve() {
-        s = new Solver(dic);
+        s = new Solver();
         s.resolve();
     }
 
