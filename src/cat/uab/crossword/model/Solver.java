@@ -4,7 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Solver {
-
+    /*AuxiliarVariable for obtain efficiency information*/
+    int openedNodes = 0;
     /*Linked list: Add and Remove = O(1). Get O(n) but, the only time that we need to get, we need to looks all list too.*/
     private LinkedList<Word> noVisitedWords = new LinkedList<Word>();
 
@@ -99,8 +100,13 @@ public class Solver {
             }
         });*/
         long time_init = System.currentTimeMillis();
-        recursive();
-        System.out.println("Done in "+(System.currentTimeMillis()-time_init)/(float)1000+ " Seconds");
+        if(backtracking())
+        System.out.println("Backtracking done in "+(System.currentTimeMillis()-time_init)/(float)1000+ " Seconds.\n" +
+                "Opened nodes: "+openedNodes);
+        else {
+            System.out.println("No existeix una solució, per aquesta combinació de Crossword i diccionari");
+            System.exit(-1);
+        }
     }
 
     public void printResult(){
@@ -109,7 +115,7 @@ public class Solver {
         }
     }
 
-    private boolean recursive(){
+    private boolean backtracking(){
         //-----The algorithm has ended?-------
         if(this.noVisitedWords.isEmpty()) {
             return true;
@@ -119,6 +125,8 @@ public class Solver {
         this.noVisitedWords.remove(actWord);
         //For each word in the domain of actWord
         for (String word : consistencyDic.get(actWord.getIDInDic())){
+            //Increment in one unit the values tried (the nodes opened).
+            openedNodes++;
             //The probability of the word are already in the crossword is so Slowly... is worthit have it that erase from all domains in each time
             if(wordsAsssigned.containsKey(word))
                 continue;
@@ -130,10 +138,7 @@ public class Solver {
             }
             //Puts the word on dictionary of words used, for avoid the repetition
             wordsAsssigned.put(word, true);
-            //Uncoment this two lines to view the algorithm step by step
-            /*System.out.println("------------------------");
-            printResult();*/
-            if(recursive()){
+            if(backtracking()){
                 //If this node is in the way of a solution founded... Ends the algorithm!
                 return true;
             }
@@ -176,4 +181,5 @@ public class Solver {
 
         //return this.dic.get(word.getLength()).stream().filter(line -> word.WordIsValid(line)).collect(Collectors.toList());
     }
+
 }

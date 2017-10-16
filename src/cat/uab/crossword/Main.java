@@ -1,3 +1,10 @@
+/*
+* Authors of this practice:
+* Eric Canas (n is an enye really)
+* Kevin Martin
+* Bernat Martinez
+ */
+
 package cat.uab.crossword;
 
 import cat.uab.crossword.model.Crossword;
@@ -23,15 +30,20 @@ public class Main {
         //Load Crossword
         File crossFile = new File(FILES_DIR+CROSSWORD_FILE);
         Crossword cross = Crossword.loadCrossword(crossFile);
+        Solver solver = new Solver();
+        solver.resolve();
+        //Print results.
+        char auxPrintMatrix [][] = Crossword.getCrossword().getStateOfCrossword();
+        System.out.println("\n ------------CROSSWORD------------ \n");
+        for (int i=0;i<auxPrintMatrix.length;i++) {
+            for (int j = 0; j < auxPrintMatrix[0].length; j++) {
+                System.out.print("|");
+                System.out.print(auxPrintMatrix[i][j]);
+            }
+            System.out.println("|");
+        }
+        System.out.println("\n -------VALUES OF VARIABLES-------- \n");
+        solver.printResult();
 
-        //Ejemplo de filtro por letra y posicion
-        /*int posicion = 1;
-        int lengthWord = 10;
-        char charToFilter = 'N';*/
-        Solver s = new Solver();
-        s.resolve();
-        //List<String> beerDrinkers = dic.get(cross.getWords().get(0).getLength()).stream().filter(line -> cross.getWords().get(0).WordIsValid(line)/*line.toCharArray()[posicion] == charToFilter*/).collect(Collectors.toList());
-        //TreeSet<String> aa = new TreeSet<>(beerDrinkers);
-        //System.out.println(aa);
     }
 }

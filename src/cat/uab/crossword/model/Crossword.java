@@ -33,7 +33,7 @@ public class Crossword {
     private short matrix[][];
     private ArrayList<Word> words;
     private Dictionary consistencyDic;
-
+    private PairWordPos auxRestrictionsMatrix[][];
 
     public static short getBLACK() {
         return BLACK;
@@ -116,7 +116,7 @@ public class Crossword {
 
         rowCount = this.getRowHeight();
         colCount = this.getColWidth();
-        PairWordPos auxRestrictionsMatrix[][] = new PairWordPos[rowCount][colCount];
+        auxRestrictionsMatrix = new PairWordPos[rowCount][colCount];
         for (i = 0; i<rowCount;i++){
             for(j=0;j<colCount;j++)
                 auxRestrictionsMatrix[i][j] = new PairWordPos(null, -1);
@@ -167,6 +167,20 @@ public class Crossword {
             }
         }
     }
+
+    public char [][] getStateOfCrossword(){
+        char [][] result = new char [Crossword.getCrossword().getMatrix().length][Crossword.getCrossword().getMatrix()[0].length];
+        for (int i = 0; i< auxRestrictionsMatrix.length;i++){
+            for(int j = 0;j<auxRestrictionsMatrix[0].length;j++){
+                if(auxRestrictionsMatrix[i][j].word == null)
+                    result [i][j] = '#';
+                else
+                    result [i][j] = auxRestrictionsMatrix[i][j].word.getWordAssigned().toCharArray()[auxRestrictionsMatrix[i][j].pos];
+            }
+        }
+        return result;
+    }
+
     /**
      * Fill matrix with file data
      */
