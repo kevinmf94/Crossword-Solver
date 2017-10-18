@@ -1,35 +1,45 @@
 package cat.uab.crossword.model;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class Solver {
-    /*AuxiliarVariable for obtain efficiency information*/
+
+    //AuxiliarVariable for obtain efficiency information
     int openedNodes = 0;
-    /*Linked list: Add and Remove = O(1). Get O(n) but, the only time that we need to get, we need to looks all list too.*/
+
+    //Linked list: Add and Remove = O(1). Get O(n) but, the only time that we need to get, we need to looks all list too.
     private LinkedList<Word> noVisitedWords = new LinkedList<Word>();
 
-    /*HashMap : Wants an object by ID = O(1).
-                LinkedList : Add and Remove = O(1). Get O(n) but, the only time that we need to get, we need to looks all list too.
-     */
+    /**
+    * HashMap : Wants an object by ID = O(1).
+    * LinkedList : Add and Remove = O(1). Get O(n) but, the only time that we need to get, we need to looks all list too.
+    */
     private HashMap<Integer, LinkedList<String>> consistencyDic = new HashMap<Integer, LinkedList<String>>();
 
-    /*HashMap : Wants an object by ID = O(1).
-                Stack : Put on top and take on top is O(1), and we need it to emulate the StackPile of the recursive process
-                LinkedList : Add and Remove = O(1). Get O(n) but, the only time that we need to get, we need to looks all list too.
-                            In addition, we have addAll, that is O(1) too in this case.
-
-     */
+    /** HashMap : Wants an object by ID = O(1).
+    *            Stack : Put on top and take on top is O(1), and we need it to emulate the StackPile of the recursive process
+    *            LinkedList : Add and Remove = O(1). Get O(n) but, the only time that we need to get, we need to looks all list too.
+    *                        In addition, we have addAll, that is O(1) too in this case.
+    **/
     private HashMap<Integer, Stack<LinkedList<String>>> StackOfState = new HashMap<Integer, Stack<LinkedList<String>>>();
 
-    /*HashMap: ContainsKey, put, and remove is O(1) (O(hash function time))*/
+    //HashMap: ContainsKey, put, and remove is O(1) (O(hash function time))
     private HashMap<String, Boolean> wordsAsssigned = new HashMap<String, Boolean>();
 
-
+    /**
+     * Constructor
+     */
     public Solver() {
         loadConsistencyDic();
         noVisitedWords.addAll(Crossword.getCrossword().getWords());
     }
+
+    /**
+     * Load consistency dic
+     */
     private void loadConsistencyDic(){
         for(Word w: Crossword.getCrossword().getWords()){
             consistencyDic.put(w.getIDInDic(), Dictionary.getDictionary().get(w.getLength()));
@@ -37,10 +47,9 @@ public class Solver {
         }
     }
 
-    /*
+    /**
     * Applies arc consistency to the domains of the words affected by wordChanged
     */
-
     private boolean applyArcConsistency(Word wordChanged){
         Queue<LinkedList<String>> newDomains = new LinkedList<LinkedList<String>>();
         Queue<LinkedList<String>> lastStates = new LinkedList<LinkedList<String>>();
@@ -66,10 +75,9 @@ public class Solver {
         return true;
     }
 
-    /*
+    /**
     * Erase the changes of the last arc consistency applyed
     */
-
     private void unApplyArcConsistency(Word wordChanged){
         for (Restriction rest : wordChanged.getRestrictions()){
             consistencyDic.get(rest.getOtherWord().getIDInDic()).addAll(StackOfState.get(rest.getOtherWord().getIDInDic()).pop());
@@ -77,28 +85,6 @@ public class Solver {
     }
 
     public void resolve(){
-        /*Collections.sort(this.words, new Comparator<Word>() {
-            @Override
-            public int compare(Word o1, Word o2) {
-                if (o1.getLength() > o2.getLength())
-                    return -1;
-                else if (o1.getLength() < o2.getLength())
-                    return 1;
-                else
-                    return 0;
-            }
-        });*/
-        /*Collections.sort(this.words, new Comparator<Word>() {
-            @Override
-            public int compare(Word o1, Word o2) {
-                if (o1.getRestrictions().size() < o2.getRestrictions().size())
-                    return 1;
-                else if (o1.getRestrictions().size() > o2.getRestrictions().size())
-                    return -1;
-                else
-                    return 0;
-            }
-        });*/
         long time_init = System.currentTimeMillis();
         if(backtracking())
         System.out.println("Backtracking done in "+(System.currentTimeMillis()-time_init)/(float)1000+ " Seconds.\n" +
@@ -167,19 +153,4 @@ public class Solver {
         }
         return nextWord;
     }
-
-    private TreeSet<String> getDomain(Word word, TreeSet<String> dic){
-
-        TreeSet<String> valid = new TreeSet<>();
-
-        for (String wordDic : dic){
-            if(word.WordIsValid(wordDic))
-                valid.add(wordDic);
-        }
-        return valid;
-
-
-        //return this.dic.get(word.getLength()).stream().filter(line -> word.WordIsValid(line)).collect(Collectors.toList());
-    }
-
 }

@@ -10,28 +10,29 @@ package cat.uab.crossword;
 import cat.uab.crossword.model.Crossword;
 import cat.uab.crossword.model.Dictionary;
 import cat.uab.crossword.model.Solver;
+
 import java.io.File;
-import java.util.List;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 public class Main {
 
     public static final String FILES_DIR = "files/";
-    public static final String CROSSWORD_FILE = "crossword_A.txt";
-    public static final String DICTIONARY_FILE = "diccionari_A.txt";
+    public static final String CROSSWORD_FILE = "crossword_CB.txt";
+    public static final String DICTIONARY_FILE = "diccionari_CB.txt";
 
     public static void main (String [ ] args) {
 
         //Load Dictionary
         File dicFile = new File(FILES_DIR+DICTIONARY_FILE);
-        Dictionary dic = Dictionary.loadDictionary(dicFile);
+        Dictionary.loadDictionary(dicFile);
 
         //Load Crossword
         File crossFile = new File(FILES_DIR+CROSSWORD_FILE);
-        Crossword cross = Crossword.loadCrossword(crossFile);
+        Crossword.loadCrossword(crossFile);
+
+        //Call solver to resolve crossword
         Solver solver = new Solver();
         solver.resolve();
+
         //Print results.
         char auxPrintMatrix [][] = Crossword.getCrossword().getStateOfCrossword();
         System.out.println("\n ------------CROSSWORD------------ \n");

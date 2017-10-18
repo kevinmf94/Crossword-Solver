@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.TreeSet;
 
 public class Dictionary extends HashMap<Integer, LinkedList<String>> {
 

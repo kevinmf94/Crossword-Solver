@@ -1,18 +1,17 @@
 package cat.uab.crossword.model;
 
 import cat.uab.crossword.exception.CrosswordFileException;
-import jdk.nashorn.internal.runtime.ListAdapter;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Dictionary;
 
 public class Crossword {
-    /*
+
+    /**
     * An aux class for catch the restrictions
-     */
+    */
     private class PairWordPos{
         public Word word;
         public int pos;
@@ -22,6 +21,7 @@ public class Crossword {
             this.pos = pos;
         }
     }
+
     //Singleton instance
     private static Crossword instance = null;
 
@@ -32,12 +32,7 @@ public class Crossword {
     private File file;
     private short matrix[][];
     private ArrayList<Word> words;
-    private Dictionary consistencyDic;
     private PairWordPos auxRestrictionsMatrix[][];
-
-    public static short getBLACK() {
-        return BLACK;
-    }
 
     public short[][] getMatrix() {
         return matrix;
@@ -80,34 +75,6 @@ public class Crossword {
         return instance;
     }
 
-    /**
-     * Load all words in list words
-     */
-/*    private void loadWords(){
-
-        int i, j;
-        int rowCount;
-        int colCount;
-
-        rowCount = this.getRowHeight();
-        colCount = this.getColWidth();
-
-        for(i = 0; i < rowCount; i++){
-
-            for(j = 0; j < colCount; j++){
-
-                if(this.matrix[i][j] >= '1' && this.matrix[i][j] <= '9'){
-
-                    if((j-1 == -1 || this.matrix[i][j-1] == BLACK) && this.matrix[i][j+1] != BLACK)
-                        this.words.add(new Word(this.matrix[i][j], Word.HORIZONTAL));
-
-                    if((i-1 == -1 || this.matrix[i-1][j] == BLACK) && this.matrix[i+1][j] != BLACK)
-                        this.words.add(new Word(this.matrix[i][j], Word.VERTICAL));
-                }
-            }
-
-        }
-    }*/
     private void loadWords(){
 
         int i, j;
