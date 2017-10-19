@@ -9,7 +9,7 @@ package cat.uab.crossword;
 
 import cat.uab.crossword.model.Crossword;
 import cat.uab.crossword.model.Dictionary;
-import cat.uab.crossword.model.Solver;
+import cat.uab.crossword.controller.Solver;
 
 import java.io.File;
 
